@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI疲れを卒業！ChatGPT実務テンプレ20選</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&family=Bebas+Neue&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1a2e;
+    --paper: #faf8f3;
+    --accent: #e63946;
+    --cyan: #00b4d8;
+    --yellow: #ffd60a;
+    --mid: #f4f1ea;
+    --shadow: rgba(0,0,0,0.12);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Noto Sans JP', sans-serif;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* ===== HERO ===== */
+  .hero {
+    background: var(--ink);
+    color: #fff;
+    padding: 80px 24px 60px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -80px; right: -80px;
+    width: 320px; height: 320px;
+    background: var(--accent);
+    border-radius: 50%;
+    opacity: 0.15;
+  }
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: -60px; left: -60px;
+    width: 240px; height: 240px;
+    background: var(--cyan);
+    border-radius: 50%;
+    opacity: 0.12;
+  }
+  .hero-badge {
+    display: inline-block;
+    background: var(--accent);
+    color: #fff;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    padding: 6px 16px;
+    border-radius: 2px;
+    margin-bottom: 20px;
+  }
+  .hero h1 {
+    font-size: clamp(28px, 6vw, 52px);
+    font-weight: 900;
+    line-height: 1.25;
+    margin-bottom: 16px;
+    position: relative;
+    z-index: 1;
+  }
+  .hero h1 .accent { color: var(--yellow); }
+  .hero-sub {
+    font-size: clamp(14px, 2.5vw, 18px);
+    color: rgba(255,255,255,0.75);
+    max-width: 600px;
+    margin: 0 auto 32px;
+    position: relative;
+    z-index: 1;
+  }
+  .hero-cta {
+    display: inline-block;
+    background: var(--yellow);
+    color: var(--ink);
+    font-weight: 900;
+    font-size: 16px;
+    padding: 16px 40px;
+    border-radius: 4px;
+    text-decoration: none;
+    transition: transform 0.2s, box-shadow 0.2s;
+    position: relative; z-index: 1;
+  }
+  .hero-cta:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(255,214,10,0.4); }
+
+  /* ===== SECTION BASE ===== */
+  .section {
+    padding: 64px 24px;
+    max-width: 960px;
+    margin: 0 auto;
+  }
+  .section-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 12px;
+  }
+  .section-label::before {
+    content: '';
+    display: block;
+    width: 24px; height: 2px;
+    background: var(--accent);
+  }
+  .section-title {
+    font-size: clamp(22px, 4vw, 36px);
+    font-weight: 900;
+    line-height: 1.3;
+    margin-bottom: 32px;
+  }
+  .divider {
+    border: none;
+    border-top: 1px solid rgba(0,0,0,0.08);
+    margin: 0;
+  }
+
+  /* ===== NOTEBOOKLM IMAGE ===== */
+  .image-card {
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 8px 40px var(--shadow);
+    margin-bottom: 40px;
+  }
+  .image-card img {
+    width: 100%;
+    display: block;
+  }
+
+  /* ===== VIDEO ===== */
+  .media-wrap {
+    background: var(--ink);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 12px 48px rgba(0,0,0,0.25);
+    margin-bottom: 40px;
+  }
+  .media-wrap video {
+    width: 100%;
+    display: block;
+  }
+
+  /* ===== AUDIO ===== */
+  .audio-section {
+    background: var(--mid);
+    border-radius: 12px;
+    padding: 32px;
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    margin-bottom: 40px;
+    flex-wrap: wrap;
+  }
+  .audio-icon {
+    width: 56px; height: 56px;
+    background: var(--accent);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .audio-icon svg { fill: #fff; }
+  .audio-info { flex: 1; min-width: 200px; }
+  .audio-info h3 { font-size: 16px; font-weight: 700; margin-bottom: 8px; }
+  .audio-info audio { width: 100%; }
+
+  /* ===== 4 STEPS ===== */
+  .steps-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    margin-bottom: 48px;
+  }
+  .step-card {
+    background: #fff;
+    border: 2px solid var(--ink);
+    border-radius: 8px;
+    padding: 24px 20px;
+    position: relative;
+    transition: transform 0.2s;
+  }
+  .step-card:hover { transform: translateY(-4px); }
+  .step-num {
+    font-family: 'Bebas Neue', cursive;
+    font-size: 48px;
+    line-height: 1;
+    color: var(--yellow);
+    -webkit-text-stroke: 2px var(--ink);
+    margin-bottom: 8px;
+  }
+  .step-card h3 { font-size: 15px; font-weight: 700; margin-bottom: 8px; }
+  .step-card p { font-size: 13px; color: #555; line-height: 1.6; }
+  .step-card.highlight { background: var(--ink); color: #fff; border-color: var(--accent); }
+  .step-card.highlight p { color: rgba(255,255,255,0.75); }
+  .step-star {
+    position: absolute;
+    top: -12px; right: 16px;
+    background: var(--accent);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: 2px;
+  }
+
+  /* ===== 3 CONSTRAINTS TABLE ===== */
+  .constraint-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 48px;
+    font-size: 14px;
+  }
+  .constraint-table th {
+    background: var(--ink);
+    color: #fff;
+    padding: 12px 16px;
+    text-align: left;
+    font-weight: 700;
+  }
+  .constraint-table td { padding: 12px 16px; border-bottom: 1px solid rgba(0,0,0,0.08); }
+  .constraint-table tr:nth-child(even) td { background: var(--mid); }
+  .tag {
+    display: inline-block;
+    background: var(--cyan);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 2px;
+  }
+
+  /* ===== 4 POWERS ===== */
+  .powers-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+    margin-bottom: 48px;
+  }
+  .power-card {
+    border-radius: 10px;
+    padding: 28px 22px;
+    position: relative;
+    overflow: hidden;
+  }
+  .power-card::before {
+    content: '';
+    position: absolute;
+    bottom: -20px; right: -20px;
+    width: 80px; height: 80px;
+    border-radius: 50%;
+    opacity: 0.15;
+    background: currentColor;
+  }
+  .power-card:nth-child(1) { background: #e8f4f8; }
+  .power-card:nth-child(2) { background: #fef9e7; }
+  .power-card:nth-child(3) { background: #fdf2f8; }
+  .power-card:nth-child(4) { background: #f0fff4; }
+  .power-num {
+    font-family: 'Bebas Neue', cursive;
+    font-size: 14px;
+    letter-spacing: 2px;
+    color: var(--accent);
+    margin-bottom: 4px;
+  }
+  .power-card h3 { font-size: 17px; font-weight: 900; margin-bottom: 6px; }
+  .power-card p { font-size: 12px; color: #555; }
+
+  /* ===== PDF EMBED ===== */
+  .pdf-block {
+    margin-bottom: 48px;
+  }
+  .pdf-title-bar {
+    background: var(--ink);
+    color: #fff;
+    padding: 14px 20px;
+    border-radius: 8px 8px 0 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 700;
+    font-size: 14px;
+  }
+  .pdf-title-bar .dot { width: 10px; height: 10px; border-radius: 50%; }
+  .pdf-title-bar .dot.r { background: #ff5f57; }
+  .pdf-title-bar .dot.y { background: #ffbd2e; }
+  .pdf-title-bar .dot.g { background: #28ca41; }
+  .pdf-embed {
+    width: 100%;
+    height: 600px;
+    border: none;
+    border-radius: 0 0 8px 8px;
+    display: block;
+    box-shadow: 0 8px 40px var(--shadow);
+  }
+
+  /* ===== RULES ===== */
+  .rules-list {
+    list-style: none;
+    margin-bottom: 48px;
+  }
+  .rules-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    padding: 18px 0;
+    border-bottom: 1px solid rgba(0,0,0,0.07);
+    font-size: 14px;
+  }
+  .rule-num {
+    width: 32px; height: 32px;
+    background: var(--cyan);
+    color: #fff;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 900;
+    font-size: 14px;
+    flex-shrink: 0;
+  }
+
+  /* ===== IRON RULES ===== */
+  .iron-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 16px;
+    margin-bottom: 48px;
+  }
+  .iron-card {
+    border-radius: 8px;
+    padding: 20px;
+    border: 2px solid transparent;
+  }
+  .iron-card.red { background: #fff1f0; border-color: var(--accent); }
+  .iron-card.yellow { background: #fffbeb; border-color: var(--yellow); }
+  .iron-card.green { background: #f0fff4; border-color: #38a169; }
+  .iron-card h4 { font-size: 14px; font-weight: 700; margin-bottom: 6px; }
+  .iron-card p { font-size: 12px; color: #555; line-height: 1.6; }
+
+  /* ===== CTA FOOTER ===== */
+  .cta-footer {
+    background: var(--ink);
+    color: #fff;
+    text-align: center;
+    padding: 72px 24px;
+  }
+  .cta-footer h2 {
+    font-size: clamp(24px, 5vw, 42px);
+    font-weight: 900;
+    margin-bottom: 12px;
+    line-height: 1.3;
+  }
+  .cta-footer p { color: rgba(255,255,255,0.7); margin-bottom: 32px; font-size: 15px; }
+  .cta-btn {
+    display: inline-block;
+    background: var(--yellow);
+    color: var(--ink);
+    font-weight: 900;
+    font-size: 18px;
+    padding: 18px 52px;
+    border-radius: 6px;
+    text-decoration: none;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .cta-btn:hover { transform: translateY(-3px); box-shadow: 0 12px 32px rgba(255,214,10,0.4); }
+
+  /* ===== FADE IN ===== */
+  .fade-in {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+  @media (max-width: 640px) {
+    .audio-section { flex-direction: column; }
+    .pdf-embed { height: 420px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ===== HERO ===== -->
+<section class="hero">
+  <div class="hero-badge">AI TEMPLATE SYSTEM</div>
+  <h1>AI疲れを卒業！<br>指示を<span class="accent">「穴埋めテスト」</span>に変えて<br>AIを相棒にする技術</h1>
+  <p class="hero-sub">"プロンプト疲れ"を終わらせ、日常業務を最速で片付けるシステム。コピーして貼るだけで、あなたの仕事は劇的に速くなる。</p>
+  <a href="#content" class="hero-cta">▼ 今すぐ確認する</a>
+</section>
+
+<div id="content"></div>
+
+<!-- ===== OVERVIEW IMAGE 1 ===== -->
+<div class="section fade-in">
+  <div class="section-label">OVERVIEW</div>
+  <h2 class="section-title">全体像：AIを「最高の相棒」にする技術</h2>
+  <div class="image-card">
+    <img src="ChatGPTtempl.png" alt="AI疲れを卒業！指示を穴埋めテストに変えてAIを相棒にする技術">
+  </div>
+</div>
+<hr class="divider">
+
+<!-- ===== OVERVIEW IMAGE 2 ===== -->
+<div class="section fade-in">
+  <div class="section-label">TEMPLATE GUIDE</div>
+  <h2 class="section-title">仕事が爆速になる！<br>ChatGPT実務テンプレ20選</h2>
+  <div class="image-card">
+    <img src="ChatGPTtempl_1.png" alt="ChatGPT実務テンプレ20選">
+  </div>
+</div>
+<hr class="divider">
+
+<!-- ===== VIDEO ===== -->
+<div class="section fade-in">
+  <div class="section-label">VIDEO</div>
+  <h2 class="section-title">動画で学ぶ：テンプレート活用法</h2>
+  <div class="media-wrap">
+    <video controls preload="metadata">
+      <source src="ChatGPTtempl.mp4" type="video/mp4">
+      お使いのブラウザは動画に対応していません。
+    </video>
+  </div>
+</div>
+<hr class="divider">
+
+<!-- ===== AUDIO ===== -->
+<div class="section fade-in">
+  <div class="section-label">AUDIO</div>
+  <h2 class="section-title">音声で聞く：ポッドキャスト版</h2>
+  <div class="audio-section">
+    <div class="audio-icon">
+      <svg width="24" height="24" viewBox="0 0 24 24"><path d="M12 3a9 9 0 110 18A9 9 0 0112 3zm0 2a7 7 0 100 14A7 7 0 0012 5zm0 3a1 1 0 011 1v4a1 1 0 01-2 0V9a1 1 0 011-1zm0 7a1 1 0 110 2 1 1 0 010-2z"/></svg>
+    </div>
+    <div class="audio-info">
+      <h3>🎙️ AI指示を「穴埋めテスト」に変える — Audio Overview</h3>
+      <audio controls>
+        <source src="ChatGPTtempl_1.m4a" type="audio/mp4">
+        お使いのブラウザは音声に対応していません。
+      </audio>
+    </div>
+  </div>
+</div>
+<hr class="divider">
+
+<!-- ===== 4 STEPS ===== -->
+<div class="section fade-in">
+  <div class="section-label">HOW IT WORKS</div>
+  <h2 class="section-title">AIを使いこなす「4つの基本ステップ」</h2>
+  <div class="steps-grid">
+    <div class="step-card">
+      <div class="step-num">01</div>
+      <h3>選ぶ（Select）</h3>
+      <p>用途にあったテンプレートを選ぶ。まずは目的に適した型を選択。</p>
+    </div>
+    <div class="step-card">
+      <div class="step-num">02</div>
+      <h3>貼る（Paste）</h3>
+      <p>AIの入力欄にそのまま貼り付ける。迷わずコピー＆ペースト！</p>
+    </div>
+    <div class="step-card">
+      <div class="step-num">03</div>
+      <h3>埋める（Fill）</h3>
+      <p>【変数】の部分に具体的な情報（スパイス）を穴埋めするだけ。</p>
+    </div>
+    <div class="step-card highlight">
+      <div class="step-star">★最重要</div>
+      <div class="step-num">04</div>
+      <h3>確認（Review）</h3>
+      <p>人間が最終確認し、必要なら修正する。AIは事実確認が苦手！</p>
+    </div>
+  </div>
+</div>
+<hr class="divider">
+
+<!-- ===== 3 CONSTRAINTS ===== -->
+<div class="section fade-in">
+  <div class="section-label">QUALITY CONTROL</div>
+  <h2 class="section-title">AIへの指示を劇的に安定させる「3つの制約」</h2>
+  <table class="constraint-table">
+    <thead>
+      <tr>
+        <th>項目</th>
+        <th>内容例</th>
+        <th>効果</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="tag">相手</span></td>
+        <td>取引先の田中様、上司、新規顧客</td>
+        <td>トーン＆マナーの最適化</td>
+      </tr>
+      <tr>
+        <td><span class="tag">目的</span></td>
+        <td>日程調整、謝罪、企画のブレスト</td>
+        <td>文章構成の方向性を固定</td>
+      </tr>
+      <tr>
+        <td><span class="tag">条件</span></td>
+        <td>丁寧、箇条書き、3案提示、件名付き</td>
+        <td>出力形式と質の担保</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<hr class="divider">
+
+<!-- ===== 4 POWERS ===== -->
+<div class="section fade-in">
+  <div class="section-label">CAPABILITIES</div>
+  <h2 class="section-title">日常業務を救う「4つの力」を手に入れる</h2>
+  <div class="powers-grid">
+    <div class="power-card">
+      <div class="power-num">POWER 01</div>
+      <h3>文章作成（7〜12）</h3>
+      <p>ゼロから考える時間をなくす。メール・報告文・慶弔化・催促文など。</p>
+    </div>
+    <div class="power-card">
+      <div class="power-num">POWER 02</div>
+      <h3>要約・整理（1〜6）</h3>
+      <p>本当に必要な情報だけを抽出する。長文要約・会議メモ整理・比較表。</p>
+    </div>
+    <div class="power-card">
+      <div class="power-num">POWER 03</div>
+      <h3>記録・進行管理（13〜17）</h3>
+      <p>カオスな状況をクリアな行動計画へ。タスク整理・優先順位づけ。</p>
+    </div>
+    <div class="power-card">
+      <div class="power-num">POWER 04</div>
+      <h3>判断支援（18〜20）</h3>
+      <p>迷う時間を減らし、素早く決断する。判断材料整理・スケジュール案。</p>
+    </div>
+  </div>
+</div>
+<hr class="divider">
+
+<!-- ===== PDF 1: Fill in the Blank ===== -->
+<div class="section fade-in">
+  <div class="section-label">RESOURCE 01</div>
+  <h2 class="section-title">AI指示を「穴埋めテスト」に変える<br>完全スライド</h2>
+  <div class="pdf-block">
+    <div class="pdf-title-bar">
+      <span class="dot r"></span>
+      <span class="dot y"></span>
+      <span class="dot g"></span>
+      Fill_in_the_Blank_AI.pdf — プロンプト疲れを終わらせるシステム
+    </div>
+    <iframe
+      src="Fill_in_the_Blank_AI.pdf"
+      class="pdf-embed"
+      title="AI指示を穴埋めテストに変える">
+    </iframe>
+  </div>
+</div>
+<hr class="divider">
+
+<!-- ===== PDF 2: Copy Paste Playbook ===== -->
+<div class="section fade-in">
+  <div class="section-label">RESOURCE 02</div>
+  <h2 class="section-title">社員のためのChatGPT仕事テンプレ20選<br>完全スライド</h2>
+  <div class="pdf-block">
+    <div class="pdf-title-bar">
+      <span class="dot r"></span>
+      <span class="dot y"></span>
+      <span class="dot g"></span>
+      ChatGPT_Copy_Paste_Playbook.pdf — コピーして貼るだけで仕事が劇的に速くなる
+    </div>
+    <iframe
+      src="ChatGPT_Copy_Paste_Playbook.pdf"
+      class="pdf-embed"
+      title="ChatGPT Copy Paste Playbook">
+    </iframe>
+  </div>
+</div>
+<hr class="divider">
+
+<!-- ===== TEMPLATE HTML ===== -->
+<div class="section fade-in">
+  <div class="section-label">RESOURCE 03</div>
+  <h2 class="section-title">すぐ使える！ChatGPT仕事テンプレ20選<br><small style="font-size:16px;font-weight:500;color:#666;">コピーして貼るだけ — 実務テンプレート全集</small></h2>
+  <div class="pdf-block">
+    <div class="pdf-title-bar">
+      <span class="dot r"></span>
+      <span class="dot y"></span>
+      <span class="dot g"></span>
+      ChatGPT仕事テンプレ20選 — メール・報告・議事録・要約・タスク整理まで
+    </div>
+    <iframe
+      src="chatgpt_templates.html"
+      class="pdf-embed"
+      style="height:800px;"
+      title="ChatGPT仕事テンプレ20選">
+    </iframe>
+  </div>
+</div>
+<hr class="divider">
+
+<!-- ===== IRON RULES ===== -->
+<div class="section fade-in">
+  <div class="section-label">RULES</div>
+  <h2 class="section-title">使うときの「鉄則」チェックリスト</h2>
+  <div class="iron-grid">
+    <div class="iron-card red">
+      <h4>🔒 個人情報・機密情報は入力禁止</h4>
+      <p>顧客情報や社外秘データは、必ず社内ルールに従って扱い、安易に入力しないこと。</p>
+    </div>
+    <div class="iron-card yellow">
+      <h4>⚠️ 無料版のURL読み込みに注意</h4>
+      <p>無料版（GPT-3.5等）はURLを直接読み込めないため、本文をコピー＆ペーストして読み込ませる必要があります。</p>
+    </div>
+    <div class="iron-card green">
+      <h4>✅ AIは「仕事を整える相棒」</h4>
+      <p>AIに全部任せるのではなく、仕事を進め、わかりやすくするためのパートナーとして活用しましょう。</p>
+    </div>
+  </div>
+
+  <!-- 5 Rules List -->
+  <ul class="rules-list">
+    <li>
+      <span class="rule-num">1</span>
+      <span>【必須】出力内容は必ず自分で最終確認する（AIの事実は常に正確とは限りません）。</span>
+    </li>
+    <li>
+      <span class="rule-num">2</span>
+      <span>【厳守】個人情報・機密情報は絶対に入力しない（社内ルールに従う）。</span>
+    </li>
+    <li>
+      <span class="rule-num">3</span>
+      <span>1回で完璧を目指さない（「もっと短く」「箇条書きで」と追加で頼む）。</span>
+    </li>
+    <li>
+      <span class="rule-num">4</span>
+      <span>自分の仕事に合わせて育てる（自社でよく使う言い回しに調整していく）。</span>
+    </li>
+    <li>
+      <span class="rule-num">5</span>
+      <span>無料版（GPT-3.5）はURLを直接読めないため、本文をコピーして貼り付ける。</span>
+    </li>
+  </ul>
+</div>
+
+<!-- ===== CTA FOOTER ===== -->
+<div class="cta-footer">
+  <h2>コピー＆ペーストから、<br>新しい働き方を始めましょう。</h2>
+  <p>AIはあなたの仕事を奪わない。整え、速める「相棒」だ。<br>まずは今日、1つだけでもテンプレートを使ってみてください。</p>
+  <a href="#content" class="cta-btn">▲ テンプレートを確認する</a>
+</div>
+
+<script>
+  // Intersection Observer for fade-in
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
